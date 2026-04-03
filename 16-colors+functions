@@ -1,0 +1,27 @@
+#!/bin/bash
+userid=$(id -u)
+R="\e[31m"
+G="\e[32m"
+Y="\e[33m"
+N="\e[0m"
+
+if [ $userid -ne 0 ]; then
+    echo -e "$R error:: $N proceed with the root user"
+    exit 1
+fi
+
+validate(){
+    if [ $1 -ne 0 ]; then
+        echo -e "$R error:: $N $2 in getting installed"
+        exit 1
+    else    
+        echo -e "$G it is a success , $2 is getting installed $N"
+    fi
+
+}
+
+dnf install mysql -y
+validate $? mysql
+
+dnf install nginx -y 
+validate $? nginx
