@@ -5,10 +5,10 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
-logs_folder=var/log/shell-script
-script_name=$( echo $0 | cut -d "." f1 )
+logs_folder=/var/log/shell-script
+script_name=$( echo $0 | cut -d "." -f1 )
 logfile="$logs_folder/$script_name.log"
-mkdir -p logs_folder
+mkdir -p $logs_folder
 echo "Script started executed at: $(date)" | tee -a $logfile
 
 if [ $userid -ne 0 ]; then
@@ -34,7 +34,7 @@ fi
 dnf list installed nginx &>>$logfile
 if [ $? -ne 0 ]; then
     dnf install nginx -y &>>$logfile
-    validate $? mysql
+    validate $? nginx
 else
     echo -e "nginx already exist ... $Y SKIPPING $N" | tee -a $logfile
 
